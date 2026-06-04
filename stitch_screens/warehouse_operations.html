@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Warehouse Operations - EnterprisePilot AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#0058be",
+                        "surface-container": "#edeef0",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#009668",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "primary-fixed": "#dae2fd",
+                        "on-secondary-fixed-variant": "#004395",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-surface": "#191c1e",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#565e74",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e7e8ea",
+                        "surface-dim": "#d9dadc",
+                        "background": "#f8f9fb",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9fb",
+                        "surface": "#f8f9fb",
+                        "inverse-surface": "#2e3132",
+                        "on-secondary-fixed": "#001a42",
+                        "on-surface-variant": "#45464d",
+                        "primary-container": "#131b2e",
+                        "primary": "#000000",
+                        "secondary-container": "#2170e4",
+                        "on-tertiary-fixed": "#002113",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f3f4f6",
+                        "surface-variant": "#e1e2e4",
+                        "inverse-on-surface": "#f0f1f3",
+                        "on-primary-fixed": "#131b2e",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "tertiary-container": "#002113",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "secondary-fixed": "#d8e2ff",
+                        "inverse-primary": "#bec6e0",
+                        "outline-variant": "#c6c6cd",
+                        "on-background": "#191c1e",
+                        "outline": "#76777d",
+                        "on-primary-container": "#7c839b",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "tertiary": "#000000",
+                        "on-secondary-container": "#fefcff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin": "24px",
+                        "xl": "32px",
+                        "gutter": "16px",
+                        "md": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "data-mono": ["IBM Plex Mono"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-caps": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "data-mono": ["13px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-hidden flex h-screen w-full">
+<!-- SideNavBar -->
+<nav class="bg-surface h-screen sticky left-0 top-0 border-r border-outline-variant flex flex-col h-full py-md w-64 shrink-0 hidden md:flex z-40">
+<div class="px-lg mb-xl">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-on-surface">EnterprisePilot</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">AI-First SaaS</p>
+</div>
+</div>
+<button class="mt-lg w-full bg-secondary text-on-secondary font-body-sm text-body-sm h-9 rounded flex items-center justify-center gap-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                New Project
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar px-md flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary font-bold border-r-2 border-secondary bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Team</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span>Workflows</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<div class="px-md pt-md border-t border-outline-variant mt-auto flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Help</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+<!-- TopNavBar -->
+<header class="bg-surface/80 backdrop-blur-md border-b border-outline-variant flex justify-between items-center w-full h-14 px-margin sticky top-0 z-50 shrink-0">
+<div class="flex items-center gap-md w-1/3">
+<div class="relative w-full max-w-md hidden md:block">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-full pl-xl pr-md py-1.5 font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent" placeholder="Search operations..." type="text"/>
+</div>
+</div>
+<div class="flex items-center justify-center font-headline-sm text-headline-sm font-bold text-on-surface md:hidden">
+                EnterprisePilot AI
+            </div>
+<div class="flex items-center gap-sm w-1/3 justify-end">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors flex items-center justify-center relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full border border-surface"></span>
+</button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors flex items-center justify-center ml-sm border border-outline-variant">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Scrollable Canvas -->
+<main class="flex-1 overflow-y-auto p-md md:p-lg">
+<div class="max-w-[1600px] mx-auto flex flex-col xl:flex-row gap-lg">
+<!-- Primary Operations Column -->
+<div class="flex-1 flex flex-col gap-lg min-w-0">
+<!-- Header -->
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Warehouse Operations</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px] text-tertiary-fixed-dim">auto_awesome</span>
+                            AI insights active: Optimized routing implemented 12 mins ago.
+                        </p>
+</div>
+<!-- Section 1: Zones Overview (Bento Grid) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Zone A -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary-fixed-dim"></div>
+<div class="flex justify-between items-start mb-md">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Zone A</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">High-Velocity Picking</p>
+</div>
+<span class="bg-surface-container-low text-on-surface px-2 py-1 rounded font-label-caps text-label-caps">92% EFF</span>
+</div>
+<div class="mt-auto">
+<div class="flex justify-between font-data-mono text-data-mono text-on-surface-variant mb-xs">
+<span>Capacity</span>
+<span class="text-on-surface">85%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+</div>
+<!-- Zone B -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md relative overflow-hidden">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Zone B</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Bulk Storage</p>
+</div>
+<span class="bg-surface-container-low text-on-surface px-2 py-1 rounded font-label-caps text-label-caps">78% EFF</span>
+</div>
+<div class="mt-auto">
+<div class="flex justify-between font-data-mono text-data-mono text-on-surface-variant mb-xs">
+<span>Capacity</span>
+<span class="text-error">95%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5">
+<div class="bg-error h-1.5 rounded-full" style="width: 95%"></div>
+</div>
+</div>
+</div>
+<!-- Zone C -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary-fixed-dim"></div>
+<div class="flex justify-between items-start mb-md">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Zone C</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Cold Chain</p>
+</div>
+<span class="bg-surface-container-low text-on-surface px-2 py-1 rounded font-label-caps text-label-caps">98% EFF</span>
+</div>
+<div class="mt-auto">
+<div class="flex justify-between font-data-mono text-data-mono text-on-surface-variant mb-xs">
+<span>Capacity</span>
+<span class="text-on-surface">42%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5">
+<div class="bg-tertiary-fixed-dim h-1.5 rounded-full" style="width: 42%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Split View/Tabs -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col">
+<div class="flex border-b border-outline-variant bg-surface-container-low">
+<button class="px-md py-sm font-headline-sm text-headline-sm text-secondary bg-surface-container-lowest border-t-2 border-secondary font-bold">Logistics Hub</button>
+<button class="px-md py-sm font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container transition-colors">Fulfillment Tracker</button>
+</div>
+<div class="p-md flex flex-col md:flex-row gap-lg">
+<!-- Inbound -->
+<div class="flex-1">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-sm uppercase border-b border-outline-variant pb-xs">Inbound Scheduled</h4>
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between items-center py-sm border-b border-outline-variant">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary">local_shipping</span>
+<div>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">SHP-9021</p>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-[10px]">Electronics (12 Pallets)</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-body-sm text-body-sm text-on-surface">14:00 EST</p>
+<p class="font-body-sm text-body-sm text-tertiary-fixed-dim">On Time</p>
+</div>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-outline-variant">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary">local_shipping</span>
+<div>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">SHP-9024</p>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-[10px]">Apparel (4 Pallets)</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-body-sm text-body-sm text-on-surface">15:30 EST</p>
+<p class="font-body-sm text-body-sm text-error">Delayed</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Outbound -->
+<div class="flex-1">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-sm uppercase border-b border-outline-variant pb-xs">Outbound Dispatch</h4>
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between items-center py-sm border-b border-outline-variant">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">flight_takeoff</span>
+<div>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">FLT-BOS-1</p>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-[10px]">Priority Air (18 Units)</p>
+</div>
+</div>
+<div class="text-right">
+<span class="bg-tertiary-fixed-dim/20 text-on-tertiary-fixed px-2 py-0.5 rounded font-data-mono text-[10px]">Loading</span>
+</div>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-outline-variant">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">local_shipping</span>
+<div>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">TRK-NY-4</p>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-[10px]">LTL Freight</p>
+</div>
+</div>
+<div class="text-right">
+<span class="bg-surface-container-high text-on-surface px-2 py-0.5 rounded font-data-mono text-[10px]">Staged</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Kanban Board -->
+<section>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-md">Active Workflows</h3>
+<div class="flex gap-md overflow-x-auto pb-sm no-scrollbar">
+<!-- Column 1: Pending -->
+<div class="bg-surface-container-low rounded-lg p-sm min-w-[280px] flex-1 flex flex-col gap-sm border border-outline-variant/50">
+<div class="flex justify-between items-center px-xs pb-xs border-b border-outline-variant">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Pending</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">12</span>
+</div>
+<!-- Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-sm cursor-pointer hover:border-secondary transition-colors">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-data-mono text-[10px] text-secondary bg-secondary/10 px-1 rounded">ORD-7742</span>
+<span class="material-symbols-outlined text-[14px] text-error">priority_high</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mb-xs">Enterprise Batch - Server Racks</p>
+<div class="flex items-center gap-xs font-body-sm text-[10px] text-on-surface-variant">
+<span class="material-symbols-outlined text-[12px]">schedule</span> 15m ago
+                                    </div>
+</div>
+</div>
+<!-- Column 2: In Progress -->
+<div class="bg-surface-container-low rounded-lg p-sm min-w-[280px] flex-1 flex flex-col gap-sm border border-outline-variant/50">
+<div class="flex justify-between items-center px-xs pb-xs border-b border-outline-variant">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Picking</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">8</span>
+</div>
+<!-- Card -->
+<div class="bg-surface-container-lowest border-l-2 border-l-secondary border-y border-r border-outline-variant rounded p-sm cursor-pointer hover:border-secondary transition-colors">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-data-mono text-[10px] text-secondary bg-secondary/10 px-1 rounded">ORD-7739</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mb-xs">Standard Restock - Zone A</p>
+<div class="w-full bg-surface-container-highest rounded-full h-1 mt-xs">
+<div class="bg-secondary h-1 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+</div>
+<!-- Column 3: Packed -->
+<div class="bg-surface-container-low rounded-lg p-sm min-w-[280px] flex-1 flex flex-col gap-sm border border-outline-variant/50">
+<div class="flex justify-between items-center px-xs pb-xs border-b border-outline-variant">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Packed &amp; Staged</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">24</span>
+</div>
+<!-- Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-sm opacity-80">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-data-mono text-[10px] text-on-surface-variant bg-surface-container px-1 rounded">ORD-7711</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mb-xs">B2B Supplies</p>
+<div class="flex items-center gap-xs font-body-sm text-[10px] text-tertiary-fixed-dim">
+<span class="material-symbols-outlined text-[12px]">check_circle</span> Ready for Bay 4
+                                    </div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Secondary Panel: Alerts -->
+<div class="w-full xl:w-80 shrink-0">
+<aside class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md sticky top-lg">
+<div class="flex items-center gap-sm mb-md pb-sm border-b border-outline-variant">
+<span class="material-symbols-outlined text-error">warning</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Bottleneck Alerts</h3>
+</div>
+<div class="flex flex-col gap-sm">
+<!-- Alert 1 -->
+<div class="bg-error-container/30 border border-error/20 rounded-lg p-sm">
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-on-error-container text-[18px] mt-0.5">conveyor_belt</span>
+<div>
+<p class="font-body-sm text-body-sm font-bold text-on-error-container">Zone B Loading Dock</p>
+<p class="font-body-sm text-[11px] text-on-error-container/80 mt-xs leading-tight">40% delay detected due to unusual LTL volume. Re-routing recommended.</p>
+<button class="mt-sm font-label-caps text-[10px] uppercase text-error border border-error/30 px-2 py-1 rounded bg-surface-container-lowest hover:bg-error/10 transition-colors">Run AI Solver</button>
+</div>
+</div>
+</div>
+<!-- Alert 2 -->
+<div class="bg-surface-container rounded-lg p-sm border border-outline-variant/50">
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px] mt-0.5">group_work</span>
+<div>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">Packing Station 3</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-xs leading-tight">Staffing deficit detected for upcoming 14:00 spike.</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</main>
+</div>
+</body></html>

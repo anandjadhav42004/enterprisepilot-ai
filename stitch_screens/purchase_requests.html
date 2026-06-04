@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Purchase Requests - EnterprisePilot AI</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 20px; /* Base size, override with utility classes if needed */
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            font-feature-settings: 'liga';
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#0058be",
+                        "surface-container": "#edeef0",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#009668",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "primary-fixed": "#dae2fd",
+                        "on-secondary-fixed-variant": "#004395",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-surface": "#191c1e",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#565e74",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e7e8ea",
+                        "surface-dim": "#d9dadc",
+                        "background": "#f8f9fb",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9fb",
+                        "surface": "#f8f9fb",
+                        "inverse-surface": "#2e3132",
+                        "on-secondary-fixed": "#001a42",
+                        "on-surface-variant": "#45464d",
+                        "primary-container": "#131b2e",
+                        "primary": "#000000",
+                        "secondary-container": "#2170e4",
+                        "on-tertiary-fixed": "#002113",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f3f4f6",
+                        "surface-variant": "#e1e2e4",
+                        "inverse-on-surface": "#f0f1f3",
+                        "on-primary-fixed": "#131b2e",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "tertiary-container": "#002113",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "secondary-fixed": "#d8e2ff",
+                        "inverse-primary": "#bec6e0",
+                        "outline-variant": "#c6c6cd",
+                        "on-background": "#191c1e",
+                        "outline": "#76777d",
+                        "on-primary-container": "#7c839b",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "tertiary": "#000000",
+                        "on-secondary-container": "#fefcff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin": "24px",
+                        "xl": "32px",
+                        "gutter": "16px",
+                        "md": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "data-mono": ["IBM Plex Mono"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-caps": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "data-mono": ["13px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased overflow-x-hidden">
+<div class="flex min-h-screen w-full">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col py-md w-64 bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline h-screen sticky left-0 top-0 shrink-0 z-40">
+<!-- Header -->
+<div class="px-md mb-lg">
+<div class="flex items-center gap-sm mb-sm">
+<div class="w-8 h-8 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-bold">
+                        EP
+                    </div>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface dark:text-inverse-on-surface">EnterprisePilot</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">AI-First SaaS</div>
+</div>
+</div>
+<button class="w-full h-[36px] bg-secondary text-on-secondary rounded-lg font-body-md text-body-md font-semibold flex items-center justify-center gap-2 hover:bg-secondary/90 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">add</span>
+                    New Project
+                </button>
+</div>
+<!-- Tabs -->
+<div class="flex-1 overflow-y-auto px-sm flex flex-col gap-xs">
+<!-- Dashboard -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-primary-container transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-95 duration-150">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<!-- Analytics -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-primary-container transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-95 duration-150">bar_chart</span>
+<span class="font-body-md text-body-md">Analytics</span>
+</a>
+<!-- Team -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-primary-container transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-95 duration-150">groups</span>
+<span class="font-body-md text-body-md">Team</span>
+</a>
+<!-- Workflows (ACTIVE) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary dark:text-secondary-fixed font-bold border-r-2 border-secondary dark:border-secondary-fixed bg-surface-container-low group" href="#">
+<span class="material-symbols-outlined group-active:scale-95 duration-150" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+<span class="font-body-md text-body-md">Workflows</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-primary-container transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-95 duration-150">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+<!-- Footer Tabs -->
+<div class="px-sm mt-auto flex flex-col gap-xs pt-4 border-t border-outline-variant/50">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-primary-container transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-95 duration-150">help</span>
+<span class="font-body-md text-body-md">Help</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-primary-container transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-95 duration-150">contact_support</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full h-14 px-margin sticky top-0 z-30 bg-surface/80 backdrop-blur-md border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-4">
+<!-- Mobile Menu Trigger (hidden on desktop) -->
+<button class="md:hidden p-2 -ml-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- Search Bar (on_left) -->
+<div class="relative hidden sm:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-size: 18px;">search</span>
+<input class="w-full h-9 pl-9 pr-3 rounded-full bg-surface-container-lowest border border-outline-variant text-body-sm font-body-sm focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all" placeholder="Search workflows..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container dark:hover:bg-primary-container transition-colors active:opacity-80">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container dark:hover:bg-primary-container transition-colors active:opacity-80 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container dark:hover:bg-primary-container transition-colors active:opacity-80">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-margin flex-1 flex flex-col gap-lg max-w-7xl w-full mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">Purchase Requests</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Manage and approve procurement workflows.</p>
+</div>
+<button class="h-[36px] px-4 bg-secondary text-on-secondary rounded-lg font-body-sm text-body-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow transition-all shrink-0 active:scale-95">
+<span class="material-symbols-outlined" style="font-size: 18px;">add</span>
+                        Create Request
+                    </button>
+</div>
+<!-- Controls & Table Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm flex flex-col overflow-hidden">
+<!-- Toolbar (Filters) -->
+<div class="p-md border-b border-outline-variant bg-surface-bright flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-size: 20px;">filter_list</span>
+<!-- Filter: Urgency -->
+<div class="relative group">
+<select class="h-[36px] pl-3 pr-8 rounded-lg border border-outline-variant bg-surface-container-lowest font-body-sm text-body-sm text-on-surface appearance-none focus:outline-none focus:ring-2 focus:ring-secondary/50 hover:bg-surface-container-low cursor-pointer w-full sm:w-auto">
+<option value="all">Urgency: All</option>
+<option value="normal">Normal</option>
+<option value="urgent">Urgent</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" style="font-size: 16px;">expand_more</span>
+</div>
+<!-- Filter: Status -->
+<div class="relative group">
+<select class="h-[36px] pl-3 pr-8 rounded-lg border border-outline-variant bg-surface-container-lowest font-body-sm text-body-sm text-on-surface appearance-none focus:outline-none focus:ring-2 focus:ring-secondary/50 hover:bg-surface-container-low cursor-pointer w-full sm:w-auto">
+<option value="all">Status: All</option>
+<option value="pending">Pending</option>
+<option value="approved">Approved</option>
+<option value="rejected">Rejected</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" style="font-size: 16px;">expand_more</span>
+</div>
+</div>
+<!-- AI Insight Sparkle (Decorative/Contextual) -->
+<div class="hidden sm:flex items-center gap-2 text-on-tertiary-container bg-[#009668]/10 px-3 py-1.5 rounded-full font-label-caps text-label-caps">
+<span class="material-symbols-outlined" style="font-size: 14px;">auto_awesome</span>
+<span>2 requests auto-flagged for review</span>
+</div>
+</div>
+<!-- Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse whitespace-nowrap">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-lowest">
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant font-semibold">Request ID</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant font-semibold">Item Name</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant font-semibold">Quantity</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant font-semibold">Vendor</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant font-semibold">Urgency</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant font-semibold">Status</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/50" id="requests-table-body">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-4 font-data-mono text-data-mono text-secondary">REQ-1042</td>
+<td class="py-3 px-4 font-body-sm text-body-sm font-medium text-on-surface">MacBook Pro M3 Max</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">3</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">Apple Enterprise</td>
+<td class="py-3 px-4">
+<div class="inline-flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">horizontal_rule</span>
+<span class="font-body-sm text-body-sm">Normal</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-caps text-label-caps border border-outline-variant/30">
+                                            Pending
+                                        </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded bg-[#009668]/10 text-on-tertiary-container hover:bg-[#009668]/20 transition-colors" onclick="openModal('REQ-1042', 'approve')" title="Approve">
+<span class="material-symbols-outlined" style="font-size: 18px;">check</span>
+</button>
+<button class="p-1.5 rounded bg-error-container text-on-error-container hover:bg-error-container/80 transition-colors" onclick="openModal('REQ-1042', 'reject')" title="Reject">
+<span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 (Urgent) -->
+<tr class="hover:bg-surface-container-low transition-colors group border-l-2 border-l-error">
+<td class="py-3 px-4 font-data-mono text-data-mono text-secondary pl-3">REQ-1041</td>
+<td class="py-3 px-4 font-body-sm text-body-sm font-medium text-on-surface">AWS Server Capacity Upgrade</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">1</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">Amazon Web Services</td>
+<td class="py-3 px-4">
+<div class="inline-flex items-center gap-1 text-error font-medium">
+<span class="material-symbols-outlined text-[14px] fill-current" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-body-sm text-body-sm">Urgent</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-caps text-label-caps border border-outline-variant/30">
+                                            Pending
+                                        </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded bg-[#009668]/10 text-on-tertiary-container hover:bg-[#009668]/20 transition-colors" onclick="openModal('REQ-1041', 'approve')" title="Approve">
+<span class="material-symbols-outlined" style="font-size: 18px;">check</span>
+</button>
+<button class="p-1.5 rounded bg-error-container text-on-error-container hover:bg-error-container/80 transition-colors" onclick="openModal('REQ-1041', 'reject')" title="Reject">
+<span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 (Approved) -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-4 font-data-mono text-data-mono text-secondary">REQ-1038</td>
+<td class="py-3 px-4 font-body-sm text-body-sm font-medium text-on-surface">Figma Enterprise Licenses</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">15</td>
+<td class="py-3 px-4 font-body-sm text-body-sm text-on-surface-variant">Figma Inc.</td>
+<td class="py-3 px-4">
+<div class="inline-flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">horizontal_rule</span>
+<span class="font-body-sm text-body-sm">Normal</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#009668]/10 text-on-tertiary-container font-label-caps text-label-caps">
+                                            Approved
+                                        </span>
+</td>
+<td class="py-3 px-4 text-right">
+<!-- Actions disabled/hidden for finalized state -->
+<span class="material-symbols-outlined text-outline text-[18px] opacity-50 cursor-not-allowed">more_horiz</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination (Static representation) -->
+<div class="p-3 border-t border-outline-variant bg-surface-container-lowest flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm">
+<div>Showing 1 to 3 of 45 entries</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded hover:bg-surface-container disabled:opacity-50" disabled=""><span class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span></button>
+<button class="w-7 h-7 rounded bg-secondary text-on-secondary flex items-center justify-center font-medium">1</button>
+<button class="w-7 h-7 rounded hover:bg-surface-container flex items-center justify-center">2</button>
+<button class="w-7 h-7 rounded hover:bg-surface-container flex items-center justify-center">3</button>
+<button class="p-1 rounded hover:bg-surface-container"><span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Confirmation Modal Overlay (Hidden by default) -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center" id="actionModal">
+<!-- Backdrop Blur -->
+<div class="absolute inset-0 bg-[#0F172A]/40 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+<!-- Modal Card -->
+<div class="relative bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.08)] w-full max-w-sm mx-4 overflow-hidden transform scale-95 opacity-0 transition-all duration-200" id="modalCard">
+<div class="p-lg">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface mb-2" id="modalTitle">Confirm Action</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6" id="modalMessage">Are you sure you want to process this request?</p>
+<div class="flex items-center justify-end gap-3">
+<button class="h-[36px] px-4 rounded-lg font-body-sm text-body-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors" onclick="closeModal()">
+                        Cancel
+                    </button>
+<button class="h-[36px] px-4 rounded-lg font-body-sm text-body-sm font-medium bg-secondary text-on-secondary hover:bg-secondary/90 transition-colors" id="modalConfirmBtn" onclick="executeAction()">
+                        Confirm
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Toast Container -->
+<div class="fixed bottom-margin right-margin z-50 flex flex-col gap-2 pointer-events-none" id="toastContainer"></div>
+<!-- JavaScript Interactions -->
+<script>
+        let currentRequestId = null;
+        let currentAction = null;
+
+        function openModal(requestId, action) {
+            currentRequestId = requestId;
+            currentAction = action;
+            
+            const modal = document.getElementById('actionModal');
+            const modalCard = document.getElementById('modalCard');
+            const title = document.getElementById('modalTitle');
+            const message = document.getElementById('modalMessage');
+            const confirmBtn = document.getElementById('modalConfirmBtn');
+
+            modal.classList.remove('hidden');
+            
+            // Trigger reflow for animation
+            void modalCard.offsetWidth;
+            
+            modalCard.classList.remove('scale-95', 'opacity-0');
+            modalCard.classList.add('scale-100', 'opacity-100');
+
+            if (action === 'approve') {
+                title.textContent = 'Approve Request';
+                message.innerHTML = `Are you sure you want to approve <span class="font-data-mono font-semibold">${requestId}</span>?`;
+                confirmBtn.className = 'h-[36px] px-4 rounded-lg font-body-sm text-body-sm font-medium bg-[#009668] text-white hover:bg-[#009668]/90 transition-colors shadow-sm';
+                confirmBtn.textContent = 'Approve';
+            } else {
+                title.textContent = 'Reject Request';
+                message.innerHTML = `Are you sure you want to reject <span class="font-data-mono font-semibold">${requestId}</span>?`;
+                confirmBtn.className = 'h-[36px] px-4 rounded-lg font-body-sm text-body-sm font-medium bg-error text-on-error hover:bg-error/90 transition-colors shadow-sm';
+                confirmBtn.textContent = 'Reject';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('actionModal');
+            const modalCard = document.getElementById('modalCard');
+            
+            modalCard.classList.remove('scale-100', 'opacity-100');
+            modalCard.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                currentRequestId = null;
+                currentAction = null;
+            }, 200);
+        }
+
+        function executeAction() {
+            if (!currentRequestId || !currentAction) return;
+
+            // In a real app, make API call here.
+            // Simulating success:
+            showToast(currentAction === 'approve' ? 'Request Approved' : 'Request Rejected', 
+                     `${currentRequestId} has been ${currentAction}d successfully.`, 
+                     currentAction === 'approve' ? 'success' : 'error');
+
+            closeModal();
+        }
+
+        function showToast(title, message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            
+            const toast = document.createElement('div');
+            toast.className = 'bg-surface-container-highest border border-outline-variant shadow-lg rounded-lg p-4 w-80 transform translate-y-4 opacity-0 transition-all duration-300 pointer-events-auto flex gap-3 items-start';
+            
+            const icon = type === 'success' ? 'check_circle' : 'error';
+            const iconColor = type === 'success' ? 'text-on-tertiary-container' : 'text-error';
+            
+            toast.innerHTML = `
+                <span class="material-symbols-outlined ${iconColor}" style="font-variation-settings: 'FILL' 1;">${icon}</span>
+                <div>
+                    <h4 class="font-headline-sm text-[14px] font-bold text-on-surface">${title}</h4>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">${message}</p>
+                </div>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Animate in
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            });
+            
+            // Remove after 3s
+            setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body></html>
